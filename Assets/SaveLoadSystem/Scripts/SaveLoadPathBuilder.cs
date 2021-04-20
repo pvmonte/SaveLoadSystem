@@ -1,5 +1,8 @@
 ﻿namespace UgglaGames.SaveLoadSystem
 {
+    /// <summary>
+    /// Build file path depending on platform
+    /// </summary>
     public class SaveLoadPathBuilder
     {
         string path;
@@ -10,14 +13,23 @@
             Path = GetPath(fileName);
         }
 
-        public string GetPath(string fileName)
+        /// <summary>
+        /// In Unity Editor, build path as project folder + filename.
+        /// In other platforms, build path as Application.persistentDataPath + fileName
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns>
+        /// In Unity Editor: fileName
+        /// iN Others: Application.persistentDataPath + fileName
+        /// </returns>
+        string GetPath(string fileName)
         {
 #if UNITY_EDITOR
             //Create file in Assets folder
             return fileName;
 #else
         //Create file in persistentDataPath
-        return $"{Application.persistentDataPath}/{fileName}.json";
+        return $"{Application.persistentDataPath}/{fileName}";
 #endif
         }
     }
